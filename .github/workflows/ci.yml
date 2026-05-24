@@ -24,4 +24,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          ansible-playbook -i inventory.ini create_ec2.yaml
+          ansible-playbook -i inventory.ini create-ec2.yaml
