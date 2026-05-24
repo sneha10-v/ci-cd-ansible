@@ -1,0 +1,30 @@
+---
+- name: Create EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    aws_access_key: YOUR_ACCESS_KEY
+    aws_secret_key: YOUR_SECRET_KEY
+    aws_region: us-east-1
+
+  tasks:
+    - name: Launch Ubuntu t3.micro
+      amazon.aws.ec2_instance:
+        access_key: "{{ aws_access_key }}"
+        secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+        name: my-ubuntu-server
+        instance_type: t3.micro
+        image_id: ami-0fc5d935ebf8bc3bc   # Ubuntu 22.04 LTS (us-east-1)
+        state: running
+        wait: true
+      register: ec2
+
+    - name: Show instance details
+      debug:
+        msg:
+          - "Instance ID : {{ ec2.instances[0].instance_id }}"
+          - "Public IP   : {{ ec2.instances[0].public_ip_address | default('N/A') }}"
+          
